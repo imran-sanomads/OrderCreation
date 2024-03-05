@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "Test"
+client_id = "528cee816890107c1206101a2abf366a"
+application_url = "https://developments-wash-jill-destinations.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_orders,read_customers,read_fulfillments,write_fulfillments,read_third_party_fulfillment_orders,write_third_party_fulfillment_orders,read_merchant_managed_fulfillment_orders,write_merchant_managed_fulfillment_orders,read_assigned_fulfillment_orders,read_order_edits,write_order_edits,write_assigned_fulfillment_orders"
+use_legacy_install_flow = true
+
+[auth]
+redirect_urls = [
+  "https://developments-wash-jill-destinations.trycloudflare.com/auth/callback",
+  "https://developments-wash-jill-destinations.trycloudflare.com/auth/shopify/callback",
+  "https://developments-wash-jill-destinations.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "sn-imran-testing.myshopify.com"
