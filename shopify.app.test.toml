@@ -2,7 +2,7 @@
 
 name = "Test"
 client_id = "528cee816890107c1206101a2abf366a"
-application_url = "https://developments-wash-jill-destinations.trycloudflare.com"
+application_url = "https://aquatic-chrysler-cheese-catalogs.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://developments-wash-jill-destinations.trycloudflare.com/auth/callback",
-  "https://developments-wash-jill-destinations.trycloudflare.com/auth/shopify/callback",
-  "https://developments-wash-jill-destinations.trycloudflare.com/api/auth/callback"
+  "https://aquatic-chrysler-cheese-catalogs.trycloudflare.com/auth/callback",
+  "https://aquatic-chrysler-cheese-catalogs.trycloudflare.com/auth/shopify/callback",
+  "https://aquatic-chrysler-cheese-catalogs.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
