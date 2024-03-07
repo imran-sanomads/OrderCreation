@@ -58,7 +58,7 @@ async function processOrderUpdate(orderData) {
                         console.log(`Title: ${lineItem.node.title}`);
                         lineItemId = lineItem.node.id;
                     });
-                    // Set the new quantity for the matching line item
+                    // Set quantity line item
                     const ORDER_EDIT_SET_QUANTITY = `
                     mutation orderEditSetQuantity($id: ID!, $lineItemId: ID!, $quantity: Int!, $restock: Boolean) {
                         orderEditSetQuantity(id: $id, lineItemId: $lineItemId, quantity: $quantity, restock: $restock) {
@@ -79,7 +79,7 @@ async function processOrderUpdate(orderData) {
                     const editVariables = {
                         id: orderEditId,
                         lineItemId: lineItemId,
-                        quantity: updateItem.fulfillable_quantity,
+                        quantity: updateItem.quantity,
                         restock: true
                     };
                     const editResponse = await executeMutation(ORDER_EDIT_SET_QUANTITY, editVariables);
@@ -107,7 +107,7 @@ async function processOrderUpdate(orderData) {
                     };
                     const commitResponse = await executeMutation(ORDER_EDIT_COMMIT, commitVariables);
                     if (commitResponse && commitResponse.orderEditCommit.userErrors.length > 0) {
-                        console.error('Error committing the order edit:', commitResponse.orderEditCommit.userErrors);
+                        console.error('Error committing the order edit:');
                     } else {
                         console.log('Order edit committed successfully:');
                     }

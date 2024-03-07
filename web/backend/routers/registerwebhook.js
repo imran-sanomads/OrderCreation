@@ -1,6 +1,7 @@
 import { DeliveryMethod } from "@shopify/shopify-api";
 import processOrder from "../processOrder.js";
 import processOrderUpdate from "../orderUpdate.js";
+import processOrderFulfillment from "../fulfillment.js";
 import dotenv from 'dotenv';
 dotenv.config();
 const receivedWebhooks = {};
@@ -47,10 +48,10 @@ export default {
       console.log(`Received fulfillment created webhook`);
       try {
         const fulfillmentData = JSON.parse(body);
-        console.log("Fulfillment data:", fulfillmentData);
+        console.log("Fulfillment data:");
         await processOrderFulfillment(fulfillmentData);
       } catch (error) {
-        console.error(`Error processing fulfillment creation:`, error);
+        console.error(`Error processing fulfillment creation:`);
       }
     },
   },
