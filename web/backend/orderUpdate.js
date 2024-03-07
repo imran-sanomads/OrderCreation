@@ -109,8 +109,9 @@ async function processOrderUpdate(orderData) {
                     if (commitResponse && commitResponse.orderEditCommit.userErrors.length > 0) {
                         console.error('Error committing the order edit:');
                     } else {
-                        console.log('Order edit committed successfully:');
+                        console.log('Order edit committed successfully:',commitResponse);
                     }
+                    
                 } else {
                     console.log(`No matching line item found for title: ${updateItem.title}`);
                 }

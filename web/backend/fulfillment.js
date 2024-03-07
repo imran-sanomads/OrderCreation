@@ -19,7 +19,7 @@ async function processOrderFulfillment(fulfillmentData) {
           },
         }
       );
-      console.log("Fulfillment orders retrieved:");
+      console.log("Fulfillment order retrieved:");
       const fulfillment = {
         "line_items_by_fulfillment_order": fulfillmentOrders.data.fulfillment_orders.map(fo => ({
           "fulfillment_order_id": fo.id,
@@ -44,7 +44,7 @@ async function processOrderFulfillment(fulfillmentData) {
     } else {
       console.log(`No matching order found for fulfillment:`);
     }
-  } catch (error) {
+  } catch (error) { 
     console.error(`Error processing order fulfillment:`);
   }
 }

@@ -2,7 +2,7 @@
 
 name = "Test"
 client_id = "528cee816890107c1206101a2abf366a"
-application_url = "https://nhl-sorted-silent-audit.trycloudflare.com"
+application_url = "https://accommodations-uc-row-reasonable.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -12,9 +12,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://nhl-sorted-silent-audit.trycloudflare.com/auth/callback",
-  "https://nhl-sorted-silent-audit.trycloudflare.com/auth/shopify/callback",
-  "https://nhl-sorted-silent-audit.trycloudflare.com/api/auth/callback"
+  "https://accommodations-uc-row-reasonable.trycloudflare.com/auth/callback",
+  "https://accommodations-uc-row-reasonable.trycloudflare.com/auth/shopify/callback",
+  "https://accommodations-uc-row-reasonable.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
