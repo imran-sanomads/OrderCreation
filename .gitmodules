@@ -1,5 +1,5 @@
 [submodule "web/frontend"]
 	path = web/frontend
-	url = https://github.com/imran-sanomads/OrderCreation/tree/1b6d11362aa3bf9f66199abefcf6e0df402bff81/web/frontend
+	url = https://github.com/imran-sanomads/OrderCreation.git
 
     
