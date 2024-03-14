@@ -1,3 +1,3 @@
-[submodule "web/frontend"]
-	path = web/frontend
-	url = https://github.com/imran-sanomads/OrderCreation.git
+# [submodule "web/frontend"]
+# 	path = web/frontend
+# 	url = https://github.com/imran-sanomads/OrderCreation.git
