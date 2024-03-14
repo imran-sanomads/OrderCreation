@@ -1,16 +1,27 @@
-import fetchOrders from './fetchOrders.js';
+import axios from 'axios';
 import executeMutation from './mutation.js';
+import dotenv from 'dotenv';
+dotenv.config();
+const baseUrl = "https://sn-imran-testing-two.myshopify.com";
+const accessToken = process.env.STORE_B_ACCESS_TOKEN;
 async function processOrderUpdate(orderData) {
     try {
-        const allOrders = await fetchOrders();
-        const matchingOrder = allOrders.find(order =>
-            order.tags &&
-            order.tags.includes(orderData.id) &&
-            order.line_items &&
-            order.line_items.length > 0 &&
-            orderData.line_items &&
-            orderData.line_items.length > 0
-        );
+        const orderId = orderData.tags;
+        if (!orderId) {
+            console.error('Order ID not found in tags.');
+            return;
+        }
+        const url = `${baseUrl}/admin/api/2023-10/orders/${orderId}.json`;
+        const headers = {
+            'X-Shopify-Access-Token': accessToken,
+            "Content-Type": "application/json",
+        };
+        const response = await axios.get(url, { headers });
+        if (!response.data) {
+            console.error(`Error fetching order: ${response.statusText}`);
+            return;
+        }
+        const matchingOrder = response.data.order;
         if (matchingOrder) {
             console.log(`Order with ID ${matchingOrder.id} has tag: ${orderData.id}`);
             for (const updateItem of orderData.line_items) {
@@ -79,7 +90,7 @@ async function processOrderUpdate(orderData) {
                     const editVariables = {
                         id: orderEditId,
                         lineItemId: lineItemId,
-                        quantity: updateItem.quantity,
+                        quantity: updateItem.current_quantity,
                         restock: true
                     };
                     const editResponse = await executeMutation(ORDER_EDIT_SET_QUANTITY, editVariables);
@@ -109,9 +120,9 @@ async function processOrderUpdate(orderData) {
                     if (commitResponse && commitResponse.orderEditCommit.userErrors.length > 0) {
                         console.error('Error committing the order edit:');
                     } else {
-                        console.log('Order edit committed successfully:',commitResponse);
+                        console.log('Order edit committed successfully:', commitResponse);
                     }
-                    
+
                 } else {
                     console.log(`No matching line item found for title: ${updateItem.title}`);
                 }
@@ -120,7 +131,7 @@ async function processOrderUpdate(orderData) {
             console.log(`No matching order found for tag: ${orderData.id}`);
         }
     } catch (error) {
-        console.error(`Error processing order update:`, error.response);
+        console.error(`Error processing order update:`, error);
     }
 }
 export default processOrderUpdate;

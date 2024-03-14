@@ -1,5 +1,7 @@
 import express from 'express'
 import shopify from './shopify.js';
+import syncRouter from './middleware/fetchproducts.js'
+import productRouter from './routers/products.js'
 import router from './routers/auth.js';
 import serveStatic from 'serve-static';
 import { readFileSync } from 'fs';
@@ -15,6 +17,9 @@ const port = parseInt(
     10
   );
 app.use(serveStatic(STATIC_PATH, { index: false }));
+app.use('/api', productRouter);
+app.use('/api', syncRouter);
+
 app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
   return res
     .status(200)

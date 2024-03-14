@@ -1,25 +1,21 @@
-import shopify from "../shopify.js";
+import fetchProducts from '../fetchProducts.js';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-export const fetchAndSaveProducts = async (session) => {
+export const fetchAndSaveProducts = async () => {
   let pageInfo;
   do {
-    const response = await shopify.api.rest.Product.all({
-      ...pageInfo?.nextPage?.query,
-      session,
-      limit: 1,
-    });
-    const pageProducts = response.data;
-    for (const product of pageProducts) {
+    const productsFromFetchProducts = await fetchProducts();
+    const allProducts = [...productsFromFetchProducts];
+    for (const product of allProducts) {
       const existingProduct = await prisma.product.findUnique({
         where: {
           product_id: product.id.toString(),
         },
-      }); 
+      });
       if (!existingProduct) {
         await prisma.product.create({
           data: {
-            title: product.title, 
+            title: product.title,
             status: product.status,
             vendor: product.vendor,
             product_id: product.id.toString(),
@@ -33,13 +29,13 @@ export const fetchAndSaveProducts = async (session) => {
             published_scope: product.published_scope,
             admin_graphql_api_id: product.admin_graphql_api_id,
             template_suffix: product.template_suffix,
-            variants:product.variants,
-            options:product.options,
-            tags:product.tags,
+            variants: product.variants,
+            options: product.options,
+            tags: product.tags,
           },
         });
       }
     }
-    pageInfo = response.pageInfo;
-  } while (pageInfo?.nextPage);
+    pageInfo = null;
+  } while (pageInfo); 
 };

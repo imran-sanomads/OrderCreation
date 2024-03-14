@@ -49,7 +49,7 @@ export default {
       console.log(`Received fulfillment created webhook`);
       try {
         const fulfillmentData = JSON.parse(body);
-        console.log("Fulfillment data:");
+        console.log("Fulfillment data:",fulfillmentData);
         await processOrderFulfillment(fulfillmentData);
       } catch (error) {
         console.error(`Error processing fulfillment creation:`);

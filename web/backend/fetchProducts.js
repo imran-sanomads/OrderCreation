@@ -1,25 +1,34 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
-const baseUrl = "https://sn-imran-testing-two.myshopify.com";
-const accessToken = process.env.STORE_B_ACCESS_TOKEN;
+const storeAToken = process.env.STORE_A_ACCESS_TOKEN;
+const storeBToken = process.env.STORE_B_ACCESS_TOKEN;
+const storeAUrl = 'https://sn-imran-testing.myshopify.com';
+const storeBUrl = 'https://sn-imran-testing-two.myshopify.com'; 
 async function fetchProducts() {
-  const url = `${baseUrl}/admin/api/2024-01/products.json`;
-  const headers = {
-    "X-Shopify-Access-Token": accessToken,
-    "Content-Type": "application/json",
-  };
   try {
-    const response = await axios.get(url, { headers });
-    if (response.status === 200) {
-      return response.data.products;
-    } else {
-      console.error(`Error fetching products: ${response.statusText}`);
-      return [];
+    const combinedProducts = [];
+    
+    const storeBResponse = await axios.get(`${storeBUrl}/admin/api/2024-01/products.json`, {
+      headers: { 'X-Shopify-Access-Token': storeBToken, 'Content-Type': 'application/json' }
+    });
+    if (storeBResponse.status === 200) {
+      combinedProducts.push(...storeBResponse.data.products); 
+    } else { 
+      console.error(`Error fetching products from Store B: ${storeBResponse.statusText}`);
     }
+    const storeAResponse = await axios.get(`${storeAUrl}/admin/api/2024-01/products.json`, {
+      headers: { 'X-Shopify-Access-Token': storeAToken, 'Content-Type': 'application/json' }
+    });
+    if (storeAResponse.status === 200) {
+      combinedProducts.push(...storeAResponse.data.products); 
+    } else {
+      console.error(`Error fetching products from Store A: ${storeAResponse.statusText}`);
+    }
+    return combinedProducts;
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    console.error('Error fetching products from stores:', error.response.data);
+    return []; 
   }
 }
 export default fetchProducts;

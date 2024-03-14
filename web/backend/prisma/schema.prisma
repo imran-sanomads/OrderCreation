@@ -28,5 +28,4 @@ model product {
   admin_graphql_api_id  String?
   variants         Json[]
   options          Json[]
-
 }
